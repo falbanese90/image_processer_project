@@ -9,5 +9,4 @@ routes.get('/', (req, res) => {
 
 routes.use('/image', image);
 
-
 export default routes;

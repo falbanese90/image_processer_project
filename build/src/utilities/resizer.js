@@ -12,13 +12,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const index_1 = __importDefault(require("../index"));
-const supertest_1 = __importDefault(require("supertest"));
-const request = (0, supertest_1.default)(index_1.default);
-describe('Test endpoint responses', () => {
-    it('gets the main root endpoint', (done) => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/');
-        expect(response.status).toBe(200);
-        done();
-    }));
-});
+const sharp_1 = __importDefault(require("sharp"));
+let inPath = './build/assets/full';
+let outPath = './build/assets/thumbnail';
+const resizer = (req, res, next) => {
+    let filename = req.query.filename;
+    let height = Number(req.query.height);
+    let width = Number(req.query.width);
+    function resize(filename) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield (0, sharp_1.default)(inPath + `/${filename}.png`)
+                    .resize(width, height)
+                    .toFile(outPath + `/${filename}_${height}x${width}.png`);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
+    }
+    resize(filename);
+    setTimeout(() => {
+        res.sendFile(`${filename}_${height}x${width}.png`, { root: outPath });
+    }, 2000);
+};
+exports.default = resizer;

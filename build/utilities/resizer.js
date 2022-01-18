@@ -15,17 +15,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const sharp_1 = __importDefault(require("sharp"));
 const resizer = (req, res, next) => {
     let filename = req.query.filename;
-    let height = req.query.height;
-    let width = req.query.width;
-    const resize = () => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            yield (0, sharp_1.default)('../api/utilities/40_winter_way.png')
-                .resize({ width: 100 })
-                .toFile('new_pic.png');
-        }
-        catch (e) {
-            console.log(`Error occured: ${e}`);
-        }
-    });
+    let height = Number(req.query.height);
+    let width = Number(req.query.width);
+    function resize(filename) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield (0, sharp_1.default)(__dirname + `/${filename}.png`)
+                    .resize(width, height)
+                    .toFile(__dirname + `/new_pic.png`);
+            }
+            catch (error) {
+                console.log(error);
+            }
+        });
+    }
+    resize(filename);
+    res.sendFile(__dirname + '/new_pic.png');
 };
 exports.default = resizer;
