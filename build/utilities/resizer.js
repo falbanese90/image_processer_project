@@ -13,6 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sharp_1 = __importDefault(require("sharp"));
+const fs_1 = __importDefault(require("fs"));
+let inPath = './build/assets/full';
+let outPath = './build/assets/thumbnail';
 const resizer = (req, res, next) => {
     let filename = req.query.filename;
     let height = Number(req.query.height);
@@ -20,16 +23,25 @@ const resizer = (req, res, next) => {
     function resize(filename) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield (0, sharp_1.default)(__dirname + `/${filename}.png`)
+                yield (0, sharp_1.default)(inPath + `/${filename}.png`)
                     .resize(width, height)
-                    .toFile(__dirname + `/new_pic.png`);
+                    .toFile(outPath + `/${filename}_${height}x${width}.png`);
             }
             catch (error) {
                 console.log(error);
             }
         });
     }
-    resize(filename);
-    res.sendFile(__dirname + '/new_pic.png');
+    if (fs_1.default.existsSync(outPath + `/${filename}_${height}x${width}.png`)) {
+        res.sendFile(`${filename}_${height}x${width}.png`, { root: outPath });
+    }
+    else {
+        resize(filename);
+        setTimeout(() => {
+            res.sendFile(`${filename}_${height}x${width}.png`, {
+                root: outPath,
+            });
+        }, 2000);
+    }
 };
 exports.default = resizer;

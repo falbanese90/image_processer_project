@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const sharp_1 = __importDefault(require("sharp"));
+const fs_1 = __importDefault(require("fs"));
 let inPath = './build/assets/full';
 let outPath = './build/assets/thumbnail';
 const resizer = (req, res, next) => {
@@ -31,9 +32,16 @@ const resizer = (req, res, next) => {
             }
         });
     }
-    resize(filename);
-    setTimeout(() => {
+    if (fs_1.default.existsSync(outPath + `/${filename}_${height}x${width}.png`)) {
         res.sendFile(`${filename}_${height}x${width}.png`, { root: outPath });
-    }, 2000);
+    }
+    else {
+        resize(filename);
+        setTimeout(() => {
+            res.sendFile(`${filename}_${height}x${width}.png`, {
+                root: outPath,
+            });
+        }, 2000);
+    }
 };
 exports.default = resizer;

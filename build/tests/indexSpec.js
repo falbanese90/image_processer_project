@@ -16,9 +16,12 @@ const index_1 = __importDefault(require("../index"));
 const supertest_1 = __importDefault(require("supertest"));
 const request = (0, supertest_1.default)(index_1.default);
 describe('Test endpoint responses', () => {
-    it('gets the main root endpoint', (done) => __awaiter(void 0, void 0, void 0, function* () {
+    it('gets the main root endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get('/');
         expect(response.status).toBe(200);
-        done();
+    }));
+    it('gets the image endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get('/image');
+        expect(response.status).toBe(200);
     }));
 });
