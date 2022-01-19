@@ -5,7 +5,6 @@ const routes = express.Router();
 
 routes.get('/', (req, res) => {
     res.send('main api route');
-    console.log(req.query);
 });
 
 routes.use('/image', image);

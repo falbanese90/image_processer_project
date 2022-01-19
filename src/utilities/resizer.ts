@@ -1,6 +1,7 @@
 import sharp from 'sharp';
 import fs from 'fs';
 import express from 'express';
+import resize from './resize';
 
 let inPath = './build/assets/full';
 let outPath = './build/assets/thumbnail';
@@ -11,22 +12,21 @@ const resizer = (
     next: Function
 ): void => {
     if (req.query.filename && req.query.height && req.query.width) {
-        let filename = req.query.filename;
+        let filename = req.query.filename as string;
         let height = Number(req.query.height);
         let width = Number(req.query.width);
-        async function resize(filename: unknown) {
-            try {
-                await sharp(inPath + `/${filename}.png`)
-                    .resize(width as number, height as number)
-                    .toFile(outPath + `/${filename}_${height}x${width}.png`);
-            } catch (error) {
-                console.log(error);
-            }
+        try {
+            resize(filename, width, height, inPath, outPath);
+        } catch (error) {
+            console.log(error);
+            res.send(error);
         }
         if (fs.existsSync(outPath + `/${filename}_${height}x${width}.png`)) {
-            res.sendFile(`${filename}_${height}x${width}.png`, { root: outPath });
+            res.sendFile(`${filename}_${height}x${width}.png`, {
+                root: outPath,
+            });
         } else {
-            resize(filename);
+            resize(filename, width, height, inPath, outPath);
             setTimeout(() => {
                 res.sendFile(`${filename}_${height}x${width}.png`, {
                     root: outPath,
@@ -34,7 +34,7 @@ const resizer = (
             }, 2000);
         }
     } else {
-        res.send('Enter params');
+        res.send('Enter params // filename = 40_winter_way, height, width');
     }
 };
 
