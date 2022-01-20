@@ -2,8 +2,8 @@ import express, { NextFunction } from 'express';
 import resize from './resize';
 import numberCheck from './numberCheck';
 
-const inPath = './build/assets/full';
-const outPath = './build/assets/thumbnail';
+const inPath = './src/assets/full';
+const outPath = './src/assets/thumbnail';
 
 const resizer = async (
     req: express.Request,

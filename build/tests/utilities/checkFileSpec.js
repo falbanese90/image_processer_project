@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const checkFile_1 = __importDefault(require("../../utilities/checkFile"));
 describe('Expects file does exist', () => {
     it('Image exists, checked successfully', () => __awaiter(void 0, void 0, void 0, function* () {
-        const filePath = './build/assets/thumbnail/40_winter_way_10x10.png';
+        const filePath = './src/assets/thumbnail/40_winter_way_10x10.png';
         expect(yield (0, checkFile_1.default)(filePath)).toBe(true);
     }));
 });

@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const resize_1 = __importDefault(require("./resize"));
 const numberCheck_1 = __importDefault(require("./numberCheck"));
-const inPath = './build/assets/full';
-const outPath = './build/assets/thumbnail';
+const inPath = './src/assets/full';
+const outPath = './src/assets/thumbnail';
 const resizer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.query.filename && req.query.height && req.query.width) {
         const filename = req.query.filename;
