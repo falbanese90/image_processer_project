@@ -31,7 +31,9 @@ const resizer = (req, res, next) => __awaiter(void 0, void 0, void 0, function* 
                 }
             });
             yield a();
-            res.sendFile(`${filename}_${height}x${width}.png`, { root: outPath });
+            res.sendFile(`${filename}_${height}x${width}.png`, {
+                root: outPath,
+            });
         }
         else {
             res.send('Params are invalid');
