@@ -1,9 +1,10 @@
 import express, { NextFunction } from 'express';
 import resize from './resize';
 import numberCheck from './numberCheck';
+import path from 'path';
 
-const inPath = './src/assets/full';
-const outPath = './src/assets/thumbnail';
+const inPath = path.join(__dirname, '../../src/assets/full');
+const outPath = path.join(__dirname, '../../src/assets/thumbnail');
 
 const resizer = async (
     req: express.Request,
