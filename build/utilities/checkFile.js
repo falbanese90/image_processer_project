@@ -8,19 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const sharp_1 = __importDefault(require("sharp"));
-const checkFile_1 = __importDefault(require("../utilities/checkFile"));
-function resize(filename, width, height, inPath, outPath) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!(yield (0, checkFile_1.default)(outPath + `/${filename}_${height}x${width}.png`))) {
-            yield (0, sharp_1.default)(inPath + `/${filename}.png`)
-                .resize(width, height)
-                .toFile(outPath + `/${filename}_${height}x${width}.png`);
-        }
-    });
-}
-exports.default = resize;
+const fs_1 = require("fs");
+const checkFile = (path) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield fs_1.promises.access(path, fs_1.constants.F_OK);
+    }
+    catch (err) {
+        return false;
+    }
+    return true;
+});
+exports.default = checkFile;

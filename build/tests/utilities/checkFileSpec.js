@@ -12,15 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const sharp_1 = __importDefault(require("sharp"));
-const checkFile_1 = __importDefault(require("../utilities/checkFile"));
-function resize(filename, width, height, inPath, outPath) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (!(yield (0, checkFile_1.default)(outPath + `/${filename}_${height}x${width}.png`))) {
-            yield (0, sharp_1.default)(inPath + `/${filename}.png`)
-                .resize(width, height)
-                .toFile(outPath + `/${filename}_${height}x${width}.png`);
-        }
-    });
-}
-exports.default = resize;
+const checkFile_1 = __importDefault(require("../../utilities/checkFile"));
+describe('Expects file does exist', () => {
+    it('Image exists, checked successfully', () => __awaiter(void 0, void 0, void 0, function* () {
+        const filePath = './build/assets/thumbnail/40_winter_way_10x10.png';
+        expect(yield (0, checkFile_1.default)(filePath)).toBe(true);
+    }));
+});

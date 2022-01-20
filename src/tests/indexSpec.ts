@@ -1,6 +1,5 @@
 import app from '../index';
 import supertest from 'supertest';
-import resizer from '../utilities/resizer';
 
 const request = supertest(app);
 
@@ -10,7 +9,9 @@ describe('Test endpoint responses', () => {
         expect(response.status).toBe(200);
     });
     it('gets the image endpoint', async () => {
-        const response = await request.get('/image');
+        const response = await request.get(
+            '/image?filename=40_winter_way&height=100&width=100'
+        );
         expect(response.status).toBe(200);
     });
 });

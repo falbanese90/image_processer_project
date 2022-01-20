@@ -21,7 +21,7 @@ describe('Test endpoint responses', () => {
         expect(response.status).toBe(200);
     }));
     it('gets the image endpoint', () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield request.get('/image');
+        const response = yield request.get('/image?filename=40_winter_way&height=100&width=100');
         expect(response.status).toBe(200);
     }));
 });
